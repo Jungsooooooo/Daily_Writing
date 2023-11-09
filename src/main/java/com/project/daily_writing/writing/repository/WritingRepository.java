@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.project.daily_writing.writing.entity.Writing;
 
-@Repository
 public interface WritingRepository extends JpaRepository<Writing, UUID> {
-
+	
 }
