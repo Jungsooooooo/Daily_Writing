@@ -11,13 +11,13 @@ import com.project.daily_writing.writing.service.WritingService;
 public class WritingServiceImpl implements WritingService {
 	
 	private final Writing writing;
-//	private final WritingRepository writingRepository;
+	private final WritingRepository writingRepository;
 	
 	public WritingServiceImpl(
 			Writing writing,
 			WritingRepository writingRepository) {
 		this.writing = writing;
-//		this.writingRepository = writingRepository;
+		this.writingRepository = writingRepository;
 	}
 
 	@Override

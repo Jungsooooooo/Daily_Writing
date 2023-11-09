@@ -9,11 +9,13 @@ import com.project.daily_writing.common.entity.CommonUUID;
 import com.project.daily_writing.types.Types;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 
 @Entity
 @Table(name = "writing")
 @Getter
+@RequiredArgsConstructor
 public class Writing extends CommonUUID {
 	
 	private String title;
