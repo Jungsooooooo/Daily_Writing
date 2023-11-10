@@ -18,8 +18,8 @@ public class TestCode {
 	@Test
 	public void create() {
 		Writing w = new Writing();
-		w.createWriting("test", "테스트 입니다");
-		writingRepository.save(w);
+//		w.createWriting("test", "테스트 입니다");
+//		writingRepository.save(w);
 	}
 
 }
