@@ -26,8 +26,8 @@ public class WritingServiceImpl implements WritingService {
 		String title	= requestWritingDto.getTitle();
 		String context	= requestWritingDto.getContext();  
 		
-		writing.createWriting(title, context);
-		
+		Writing wt = new Writing().builder().title(title).context(context).build();
+		writingRepository.save(wt);
 		return null;
 	}
 }

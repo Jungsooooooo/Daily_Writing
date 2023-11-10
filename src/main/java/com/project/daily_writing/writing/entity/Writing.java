@@ -4,10 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
 
 import com.project.daily_writing.common.entity.CommonUUID;
 import com.project.daily_writing.types.Types;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "writing")
 @Getter
 @RequiredArgsConstructor
+@Component
 public class Writing extends CommonUUID {
 	
 	private String title;
@@ -24,9 +27,11 @@ public class Writing extends CommonUUID {
 	@ManyToOne
 	private Types types;
 	
-	public void createWriting(String title, String context) {
+	@Builder
+	public Writing(String title, String context) {
 		this.title 	 = title;
 		this.context = context;
 	}
 	
 }
+
