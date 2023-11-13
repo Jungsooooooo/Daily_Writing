@@ -28,6 +28,6 @@ public class WritingServiceImpl implements WritingService {
 		
 		Writing wt = new Writing().builder().title(title).context(context).build();
 		writingRepository.save(wt);
-		return null;
+		return wt;
 	}
 }
