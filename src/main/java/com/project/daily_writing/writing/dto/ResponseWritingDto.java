@@ -14,7 +14,7 @@ public class ResponseWritingDto {
 	
 	public ResponseWritingDto(Writing writing) {
 		this.title   = writing.getTitle();
-		this.context = writing.getTitle();
+		this.context = writing.getContext();
 	}
 	
 }
