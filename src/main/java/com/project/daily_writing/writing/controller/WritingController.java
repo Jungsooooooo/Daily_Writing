@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.daily_writing.writing.dto.RequestWritingDto;
+import com.project.daily_writing.writing.dto.ResponseWritingDto;
 import com.project.daily_writing.writing.entity.Writing;
 import com.project.daily_writing.writing.service.WritingService;
 
@@ -22,13 +23,12 @@ public class WritingController {
 	}
 	
 	@PostMapping("/create")
-	public Writing create(@RequestBody RequestWritingDto requestWritingDto) {
+	public ResponseWritingDto create(@RequestBody RequestWritingDto requestWritingDto) {
 		
+		Writing writing = writingService.createWriting(requestWritingDto); 
+		ResponseWritingDto responseWritingDto = new ResponseWritingDto(writing);
 		
-		return writingService.createWriting(requestWritingDto);
+		return responseWritingDto;
 	}
-	
-	
-	
 	
 }
