@@ -1,5 +1,9 @@
 package com.project.daily_writing.writing.service.impl;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.project.daily_writing.writing.dto.RequestWritingDto;
@@ -29,5 +33,13 @@ public class WritingServiceImpl implements WritingService {
 		Writing wt = new Writing().builder().title(title).context(context).build();
 		writingRepository.save(wt);
 		return wt;
+	}
+	
+	@Override
+	public Page<Writing> getWritingAll(Pageable pageable) {
+		
+		Page<Writing> writingList = writingRepository.findAll(pageable);
+		
+		return writingList;
 	}
 }
