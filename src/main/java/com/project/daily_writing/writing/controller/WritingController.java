@@ -24,7 +24,7 @@ import com.project.daily_writing.writing.service.WritingService;
 @RequestMapping("/api/writings")
 public class WritingController {
 	
-	@Autowired
+
 	private WritingService writingService;
 	
 	public WritingController(WritingService writingService) {
