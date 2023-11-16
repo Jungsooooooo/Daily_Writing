@@ -1,9 +1,12 @@
 package com.project.daily_writing.writing.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
 
 import com.project.daily_writing.common.entity.CommonUUID;
@@ -22,7 +25,11 @@ import lombok.RequiredArgsConstructor;
 public class Writing extends CommonUUID {
 	
 	private String title;
+	
 	private String context;
+	
+	@CreationTimestamp
+	private LocalDateTime creationDate;
 	
 	@ManyToOne
 	private Types types;
