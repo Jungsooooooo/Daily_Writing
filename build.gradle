@@ -32,6 +32,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1") {
+    	exclude module:'junit-platform-commons'
+	}
+
 	
 	// queryDSL 설정
 	implementation "com.querydsl:querydsl-jpa"
