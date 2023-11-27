@@ -13,4 +13,6 @@ public interface WritingService {
 	public Writing createWriting(RequestWritingDto requestWritingDto);
 	
 	public Page<Writing> getWritingAll(Pageable pageable);
+	
+	public void deleteWriting(String id);
 }

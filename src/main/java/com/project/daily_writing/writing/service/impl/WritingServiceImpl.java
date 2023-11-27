@@ -1,6 +1,7 @@
 package com.project.daily_writing.writing.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,5 +42,12 @@ public class WritingServiceImpl implements WritingService {
 		Page<Writing> writingList = writingRepository.findAll(pageable);
 		
 		return writingList;
+	}
+	
+	@Override
+	public void deleteWriting(String id) {
+				
+		writingRepository.deleteById(Integer.parseInt(id));
+		
 	}
 }
