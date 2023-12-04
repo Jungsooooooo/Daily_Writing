@@ -28,6 +28,8 @@ public class Writing extends CommonUUID {
 	
 	private String context;
 	
+	private Long showNumber;
+	
 	@CreationTimestamp
 	private LocalDateTime creationDate;
 	
