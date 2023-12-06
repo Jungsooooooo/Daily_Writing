@@ -42,6 +42,15 @@ public class WritingController {
 		
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getWritingOne(@PathVariable("id") Long id) {
+		Writing writing = writingService.getWritingOne(id);
+		ResponseWritingDto writingListResponse =  new ResponseWritingDto(writing);
+		
+		return new ResponseEntity<>(writingListResponse, HttpStatus.OK);
+		
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@RequestBody RequestWritingDto requestWritingDto) {
 		

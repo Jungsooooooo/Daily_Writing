@@ -15,4 +15,6 @@ public interface WritingService {
 	public Page<Writing> getWritingAll(Pageable pageable);
 	
 	public void deleteWriting(String id);
+	
+	public Writing getWritingOne(Long id);
 }

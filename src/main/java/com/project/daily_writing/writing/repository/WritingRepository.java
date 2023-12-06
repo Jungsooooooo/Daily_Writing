@@ -14,4 +14,6 @@ import com.project.daily_writing.writing.entity.Writing;
 public interface WritingRepository extends JpaRepository<Writing, Integer> {
 	
 	Page<Writing> findAll(Pageable pageable);
+	
+	Writing findById(Long id);
 }

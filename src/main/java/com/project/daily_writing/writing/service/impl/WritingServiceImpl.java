@@ -50,4 +50,12 @@ public class WritingServiceImpl implements WritingService {
 		writingRepository.deleteById(Integer.parseInt(id));
 		
 	}
+	
+	@Override
+	public Writing getWritingOne(Long id) {
+		
+		Writing writing = writingRepository.findById(id);
+		
+		return writing;
+	}
 }
