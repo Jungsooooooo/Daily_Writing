@@ -58,4 +58,12 @@ public class WritingServiceImpl implements WritingService {
 		
 		return writing;
 	}
+	
+	@Override
+	public Page<Writing> getSearchWritingByTitle(String title,Pageable pageable) {
+	
+		Page<Writing> writing = writingRepository.findByTitleContaining(title,pageable);
+		
+		return writing;
+	}
 }

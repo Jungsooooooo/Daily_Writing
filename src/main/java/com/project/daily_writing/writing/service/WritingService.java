@@ -17,4 +17,6 @@ public interface WritingService {
 	public void deleteWriting(String id);
 	
 	public Writing getWritingOne(Long id);
+	
+	public Page<Writing> getSearchWritingByTitle(String title, Pageable pageable);
 }

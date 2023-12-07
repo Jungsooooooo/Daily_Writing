@@ -1,6 +1,7 @@
 package com.project.daily_writing.writing.repository;
 
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface WritingRepository extends JpaRepository<Writing, Integer> {
 	Page<Writing> findAll(Pageable pageable);
 	
 	Writing findById(Long id);
+	
+	Page<Writing> findByTitleContaining(String title,Pageable pageable);
 }

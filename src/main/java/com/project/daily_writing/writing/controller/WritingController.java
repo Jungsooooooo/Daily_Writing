@@ -51,6 +51,15 @@ public class WritingController {
 		
 	}
 	
+	@GetMapping("/search/{name}")
+	public ResponseEntity<?> getSearchDatabyName(@PathVariable("name") String name, Pageable pageable){
+		
+		Page<Writing> writingList = writingService.getSearchWritingByTitle(name, pageable);
+		List<ResponseWritingDto> writingListResponse = writingList.stream().map(writing->new ResponseWritingDto(writing)).collect(Collectors.toList());
+		
+		return new ResponseEntity<>(writingListResponse, HttpStatus.OK);
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@RequestBody RequestWritingDto requestWritingDto) {
 		
