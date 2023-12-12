@@ -42,6 +42,24 @@ public class WritingController {
 		
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getWritingOne(@PathVariable("id") Long id) {
+		Writing writing = writingService.getWritingOne(id);
+		ResponseWritingDto writingListResponse =  new ResponseWritingDto(writing);
+		
+		return new ResponseEntity<>(writingListResponse, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/search/{name}")
+	public ResponseEntity<?> getSearchDatabyName(@PathVariable("name") String name, Pageable pageable){
+		
+		Page<Writing> writingList = writingService.getSearchWritingByTitle(name, pageable);
+		List<ResponseWritingDto> writingListResponse = writingList.stream().map(writing->new ResponseWritingDto(writing)).collect(Collectors.toList());
+		
+		return new ResponseEntity<>(writingListResponse, HttpStatus.OK);
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@RequestBody RequestWritingDto requestWritingDto) {
 		

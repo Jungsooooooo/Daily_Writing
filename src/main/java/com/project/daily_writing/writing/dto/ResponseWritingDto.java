@@ -14,11 +14,15 @@ public class ResponseWritingDto {
 	private String title;
 	private String context;
 	private LocalDateTime creationDate;
+	private Long showNumber;
+	private Long id;
 	
 	public ResponseWritingDto(Writing writing) {
+		this.id				= writing.getId();
 		this.title			= writing.getTitle();
 		this.context		= writing.getContext();
 		this.creationDate	= writing.getCreationDate();
+		this.showNumber		= writing.getShowNumber();
 	}
 	
 }
