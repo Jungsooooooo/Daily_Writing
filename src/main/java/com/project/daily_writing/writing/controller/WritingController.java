@@ -35,7 +35,7 @@ public class WritingController {
 	
 	@GetMapping
 	public ResponseEntity<?> getWriting(Pageable pageable) {
-		Page<Writing> writingList = writingService.getWritingAll(pageable);
+ 		Page<Writing> writingList = writingService.getWritingAll(pageable);
 		List<ResponseWritingDto> writingListResponse = writingList.stream().map(writing->new ResponseWritingDto(writing)).collect(Collectors.toList());
 		
 		return new ResponseEntity<>(writingListResponse, HttpStatus.OK);
@@ -71,6 +71,7 @@ public class WritingController {
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") String id){
+		
 		writingService.deleteWriting(id);
 		
 		return new ResponseEntity<>("delete completed",HttpStatus.OK);
