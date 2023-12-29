@@ -46,8 +46,10 @@ public class WritingServiceImpl implements WritingService {
 	
 	@Override
 	public void deleteWriting(String id) {
-				
-		writingRepository.deleteById(Integer.parseInt(id));
+		
+		Long longId = Long.parseLong(id);
+		Writing writing = writingRepository.findById(longId);
+		writingRepository.delete(writing);
 		
 	}
 	

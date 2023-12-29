@@ -3,6 +3,7 @@ package com.project.daily_writing.writing.entity;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,6 +27,7 @@ public class Writing extends CommonUUID {
 	
 	private String title;
 	
+	@Lob
 	private String context;
 	
 	private Long showNumber;
