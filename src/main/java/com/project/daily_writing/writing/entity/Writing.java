@@ -44,5 +44,10 @@ public class Writing extends CommonUUID {
 		this.context = context;
 	}
 	
+	public void updateWriting(String title, String context) {
+		this.title 	 = title;
+		this.context = context;
+	};
+	
 }
 

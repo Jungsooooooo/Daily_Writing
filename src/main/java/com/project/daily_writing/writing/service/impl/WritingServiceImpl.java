@@ -68,4 +68,19 @@ public class WritingServiceImpl implements WritingService {
 		
 		return writing;
 	}
+	
+	@Override
+	public Writing updateWriting(RequestWritingDto requestWritingDto) {
+		
+		Long id = requestWritingDto.getId();
+		
+		Writing writing = writingRepository.findById(id);
+		
+		String title   = requestWritingDto.getTitle();
+		String context = requestWritingDto.getContext();
+		
+		writing.updateWriting(title, context);
+		
+		return writing;
+	}
 }

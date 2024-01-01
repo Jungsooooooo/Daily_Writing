@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.daily_writing.writing.dto.RequestWritingDto;
 import com.project.daily_writing.writing.dto.ResponseWritingDto;
@@ -68,6 +69,17 @@ public class WritingController {
 		
 		return new ResponseEntity<>(responseWritingDto, HttpStatus.CREATED);
 	}
+	
+	@PostMapping("/update")
+	public ResponseEntity<?> update( @RequestBody RequestWritingDto requestWritingDto){
+		
+		Writing writing = writingService.updateWriting(requestWritingDto);
+		ResponseWritingDto responseWritingDto = new ResponseWritingDto(writing);
+		
+		return new ResponseEntity<>(responseWritingDto, HttpStatus.OK);
+		
+	}
+	
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") String id){
