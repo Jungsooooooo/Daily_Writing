@@ -80,6 +80,7 @@ public class WritingServiceImpl implements WritingService {
 		String context = requestWritingDto.getContext();
 		
 		writing.updateWriting(title, context);
+		writingRepository.save(writing);
 		
 		return writing;
 	}

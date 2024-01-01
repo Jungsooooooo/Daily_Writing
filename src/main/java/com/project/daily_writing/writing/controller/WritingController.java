@@ -71,7 +71,7 @@ public class WritingController {
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<?> update( @RequestBody RequestWritingDto requestWritingDto){
+	public ResponseEntity<?> update(@RequestBody RequestWritingDto requestWritingDto){
 		
 		Writing writing = writingService.updateWriting(requestWritingDto);
 		ResponseWritingDto responseWritingDto = new ResponseWritingDto(writing);
