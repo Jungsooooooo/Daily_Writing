@@ -19,4 +19,6 @@ public interface WritingService {
 	public Writing getWritingOne(Long id);
 	
 	public Page<Writing> getSearchWritingByTitle(String title, Pageable pageable);
+	
+	public Writing updateWriting(RequestWritingDto requestWritingDto);
 }
