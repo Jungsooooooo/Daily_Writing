@@ -12,7 +12,7 @@ public interface WritingService {
 	
 	public Writing createWriting(RequestWritingDto requestWritingDto);
 	
-	public Page<Writing> getWritingAll(Pageable pageable);
+	public Page<Writing> getWritingAll(int page, int size, Pageable pageable);
 	
 	public void deleteWriting(String id);
 	

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +38,9 @@ public class WritingServiceImpl implements WritingService {
 	}
 	
 	@Override
-	public Page<Writing> getWritingAll(Pageable pageable) {
+	public Page<Writing> getWritingAll(int page, int size,Pageable pageable) {
 		
-		Page<Writing> writingList = writingRepository.findAll(pageable);
+		Page<Writing> writingList = writingRepository.findAll(PageRequest.of(page, size));
 		
 		return writingList;
 	}

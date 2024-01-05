@@ -1,6 +1,10 @@
 package com.project.daily_writing.writing.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import com.project.daily_writing.writing.entity.Writing;
 
@@ -23,6 +27,16 @@ public class ResponseWritingDto {
 		this.context		= writing.getContext();
 		this.creationDate	= writing.getCreationDate();
 		this.showNumber		= writing.getShowNumber();
+	}
+	
+	private List<ResponseWritingDto> writings;
+	long totalElements;
+	
+	public ResponseWritingDto(Page<Writing> writings, long totalElements) {
+		
+		this.writings				= writings.getContent().stream().map(writing->new ResponseWritingDto(writing)).collect(Collectors.toList());
+		this.totalElements 			= totalElements;
+		
 	}
 	
 }
