@@ -7,11 +7,6 @@
 > linux(vm 설치 후 ubuntu 실행 하여 nginx 서버 실행)
 > mysql
 
-### 2. Front-end
-
-> vue.js  
-> vue-bootstrap
-
 ## ⚙주요기능
 
 1. 내가 적은 일기장 확인하는 홈 화면.
