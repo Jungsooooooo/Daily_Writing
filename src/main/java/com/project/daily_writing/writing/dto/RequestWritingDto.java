@@ -10,5 +10,6 @@ public class RequestWritingDto {
 	private String title;
 	private String context;
 	private Long   id;
+	private String mainImageUrl;
 	
 }

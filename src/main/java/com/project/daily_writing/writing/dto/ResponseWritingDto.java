@@ -20,6 +20,7 @@ public class ResponseWritingDto {
 	private LocalDateTime creationDate;
 	private Long showNumber;
 	private Long id;
+	private String mainImageUrl;
 	
 	public ResponseWritingDto(Writing writing) {
 		this.id				= writing.getId();
@@ -27,6 +28,7 @@ public class ResponseWritingDto {
 		this.context		= writing.getContext();
 		this.creationDate	= writing.getCreationDate();
 		this.showNumber		= writing.getShowNumber();
+		this.mainImageUrl	= writing.getMainImageUrl();
 	}
 	
 	private List<ResponseWritingDto> writings;

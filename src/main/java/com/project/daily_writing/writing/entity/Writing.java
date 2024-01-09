@@ -24,30 +24,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class Writing extends CommonUUID {
-	
-	private String title;
-	
-	@Lob
-	private String context;
-	
-	private Long showNumber;
-	
-	@CreationTimestamp
-	private LocalDateTime creationDate;
-	
-	@ManyToOne
-	private Types types;
-	
-	@Builder
-	public Writing(String title, String context) {
-		this.title 	 = title;
-		this.context = context;
-	}
-	
-	public void updateWriting(String title, String context) {
-		this.title 	 = title;
-		this.context = context;
-	};
-	
+   
+   private String title;
+   private String mainImageUrl;
+   
+   @Lob
+   private String context;
+   
+   private Long showNumber;
+   
+   @CreationTimestamp
+   private LocalDateTime creationDate;
+   
+   @ManyToOne
+   private Types types;
+   
+   @Builder
+   public Writing(String title, String context, String mainImageUrl) {
+      this.title     = title;
+      this.context = context;
+      this.mainImageUrl = mainImageUrl;
+   }
+   
+   public void updateWriting(String title, String context, String mainImageUrl) {
+      this.title     = title;
+      this.context = context;
+      this.mainImageUrl = mainImageUrl;
+   };
+   
 }
-
