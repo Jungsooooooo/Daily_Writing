@@ -9,14 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,90 +31,119 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import com.project.daily_writing.files.service.FileService;
 
 @Controller
 @RequestMapping("/api/files")
 public class FileController {
+  
    
-   private static final String UPLOAD_DIR ="/home/test/images/";
-   private static final String localFilePath= "C:\\Users\\hr\\Desktop\\Nginx-Logo-02.png";
+   private FileService fileService;
+   
+   String host = "192.168.67.128";
+   String user = "test";
+   String password = "test1234";;
+   
+   public FileController(FileService fileService) {
+	   this.fileService = fileService;
+   }
    
    @PostMapping("/upload")
    public ResponseEntity<String> imageUpload(@RequestBody Map<String, String> data) throws JSchException{
       
-      String host = "192.168.67.128";
-        String user = "test";
-        String password = "test1234";
-        int port = 22; // SFTP 포트는 일반적으로 22
-      
-      JSch jsch = new JSch();
-      Session session = jsch.getSession(user, host, port);;
-        ChannelSftp channelSftp = null;
       try {
          
          String imageInfo = data.get("imageInfo");
 
-            // 이미지 정보를 Base64 디코딩
             byte[] imageBytes = Base64.getDecoder().decode(imageInfo);
 
-            // 임시로 파일 저장
             String uploadDir = "C:\\Users\\hr\\Desktop\\";
             String fileName = data.get("imageName");
 
             File localFile = new File(uploadDir + fileName);
             FileUtils.writeByteArrayToFile(localFile, imageBytes);
 
-            // Linux 서버로 업로드
-            uploadToLinuxServer(localFile, "/home/test/images/", host, user, password);
-   
-//         
-//         session = jsch.getSession(user, host, port);
-//            session.setPassword(password);
-//            session.setConfig("StrictHostKeyChecking", "no");
-//            session.connect();
-//           
-//           
-//           channelSftp = (ChannelSftp) session.openChannel("sftp");
-//            channelSftp.connect();
-//
-//            channelSftp.cd(UPLOAD_DIR); // 원격 디렉토리로 이동
-//            Resource f =file.getResource();
-//            String filePath = file.getResource().getFile().getPath().toString();
-//            channelSftp.put(filePath, channelSftp.pwd()); // 파일 업로드
-//      
-//         byte[] bytes = file.getBytes();
-//            Path path = Paths.get(UPLOAD_DIR + "/" + file.getOriginalFilename());
-//            Files.write(path, bytes);
+            fileService.uploadToLinuxServer(localFile, "/home/test/images/", host, user, password);
          
          return ResponseEntity.ok("File uploaded successfully.");
       }catch(Exception e) {
          e.printStackTrace();
-         return ResponseEntity.ok("Failed");
+         
+         return ResponseEntity.ok(e.getMessage());
+      }
+   }
+   @PostMapping("/upload-by-id")
+   public ResponseEntity<String> imageUploadById(@RequestBody Map<String, String> data) throws JSchException{
+      
+      try {
+         
+         String imageInfo = data.get("imageInfo");
+         String id		  = data.get("id");
+            byte[] imageBytes = Base64.getDecoder().decode(imageInfo);
+
+            String uploadDir = "C:\\Users\\hr\\Desktop\\";
+            String fileName = data.get("imageName");
+
+            File localFile = new File(uploadDir + fileName);
+            FileUtils.writeByteArrayToFile(localFile, imageBytes);
+
+            fileService.uploadToLinuxServerIdFolder(localFile, "/home/test/images/", host, user, password,id);
+         
+         return ResponseEntity.ok("File uploaded successfully.");
+      }catch(Exception e) {
+         e.printStackTrace();
+         
+         return ResponseEntity.ok(e.getMessage());
       }
    }
    
-   private void uploadToLinuxServer(File localFile, String remoteDir, String host, String username, String password) throws JSchException, SftpException, FileNotFoundException {
-        JSch jsch = new JSch();
-
-        // SSH 연결
-        Session session = jsch.getSession(username, host, 22);
-        session.setPassword(password);
-        Properties config = new Properties();
-        config.put("StrictHostKeyChecking", "no");
-        session.setConfig(config);
-        session.connect();
-
-        // SFTP 채널 열기
-        Channel channel = session.openChannel("sftp");
-        channel.connect();
-        ChannelSftp sftpChannel = (ChannelSftp) channel;
-
-        // 리모트 디렉터리로 파일 전송
-        sftpChannel.put(new FileInputStream(localFile), remoteDir + localFile.getName());
-
-        // 연결 해제
-        sftpChannel.exit();
-        channel.disconnect();
-        session.disconnect();
-    }
+   @PostMapping("/delete")
+   public ResponseEntity<String> imageDelete(@RequestBody List<String> filePathList) throws JSchException{   
+    
+      try {
+         
+            fileService.deleteFile(filePathList, host, user, password);
+         
+         return ResponseEntity.ok("File deleted successfully.");
+      }catch(Exception e) {
+         e.printStackTrace();
+         
+         return ResponseEntity.ok(e.getMessage());
+      }
+   }
+   
+   @PostMapping("/create-temp-folder")
+   public ResponseEntity<?> createTempFolder(){
+	   try {
+	         
+		   fileService.makeFolderInLinux("/home/test/images/", host, user, password, host);
+        
+        return new ResponseEntity<>("File deleted successfully.",HttpStatus.OK);
+           
+     }catch(Exception e) {
+        e.printStackTrace();
+        
+        return ResponseEntity.ok(e.getMessage());
+     }
+	   
+   }
+   
+   @PutMapping("/update-folder-name")
+   public ResponseEntity<?> updateFolderName(@RequestBody Map<String, String> data){
+	   try {
+		   
+		   String id = data.get("id");
+	         
+		   fileService.changeFolderName("/home/test/images/temp/", host, user, password, id);
+        
+        return new ResponseEntity<>("File deleted successfully.",HttpStatus.OK);
+           
+     }catch(Exception e) {
+        e.printStackTrace();
+        
+        return ResponseEntity.ok(e.getMessage());
+     }
+	   
+   }
+   
  }
