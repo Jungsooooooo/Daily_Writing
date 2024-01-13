@@ -174,12 +174,19 @@ public class FileServiceImpl implements FileService {
 //            }
 //			
 //		}
-        SftpATTRS attrs = sftpChannel.stat("/home/user/images/temp");
-        if (attrs != null) {
-            System.out.println("Folder already exists");
-        } else {
+        try {
+        	SftpATTRS attrs = sftpChannel.stat("/home/user/images/temp");
+        	if (attrs != null) {
+                System.out.println("Folder already exists");
+            } else {
+            	sftpChannel.mkdir(remoteDir  + "temp");
+            }
+        	
+        }catch(Exception e){
         	sftpChannel.mkdir(remoteDir  + "temp");
         }
+        
+        
 		
 	}
 	@Override
