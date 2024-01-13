@@ -14,6 +14,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
 import com.project.daily_writing.files.service.FileService;
 
@@ -152,24 +153,33 @@ public class FileServiceImpl implements FileService {
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
         
-        @SuppressWarnings("unchecked")
-        Vector<ChannelSftp.LsEntry> fileList = sftpChannel.ls(remoteDir);
-        
-        boolean subFolderExists = false;
-        for(ChannelSftp.LsEntry entry : fileList) {
-			
-			if(entry.getAttrs().isDir() && entry.getFilename().equals("temp")) {
-				subFolderExists = true;
-                break;
-			}
-			
-			if (!subFolderExists) {
-				sftpChannel.mkdir(remoteDir  + "temp");
-            } else {
-                System.out.println("폴더 이미 존재함: " + "temp");
-            }
-			
-		}
+//        @SuppressWarnings("unchecked")
+//        Vector<ChannelSftp.LsEntry> fileList = sftpChannel.ls(remoteDir);
+//        
+//        boolean subFolderExists = false;
+//        for(ChannelSftp.LsEntry entry : fileList) {
+//			
+//			if(entry.getAttrs().isDir() && entry.getFilename().equals("temp")) {
+//				subFolderExists = true;
+//				
+//				if(subFolderExists) {
+//					break;
+//				}
+//			}
+//			
+//			if (!subFolderExists) {
+//				sftpChannel.mkdir(remoteDir  + "temp");
+//            } else {
+//                System.out.println("폴더 이미 존재함: " + "temp");
+//            }
+//			
+//		}
+        SftpATTRS attrs = sftpChannel.stat("/home/user/images/temp");
+        if (attrs != null) {
+            System.out.println("Folder already exists");
+        } else {
+        	sftpChannel.mkdir(remoteDir  + "temp");
+        }
 		
 	}
 	@Override
@@ -186,7 +196,7 @@ public class FileServiceImpl implements FileService {
 	        channelSftp.connect();
 	
 	        // 폴더 이름 변경
-	        channelSftp.rename(remoteDir, "/home/test/images/" + id);
+	        channelSftp.rename(remoteDir, "/home/user/images/" + id);
 	
 	        channelSftp.disconnect();
 	        session.disconnect();
