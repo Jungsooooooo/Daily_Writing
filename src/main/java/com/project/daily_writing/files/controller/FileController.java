@@ -57,7 +57,7 @@ public class FileController {
 
             byte[] imageBytes = Base64.getDecoder().decode(imageInfo);
 
-            String uploadDir = "C:\\Users\\USER\\Desktop\\";
+            String uploadDir = "C:\\Users\\USER\\";
             String fileName = data.get("imageName");
 
             File localFile = new File(uploadDir + fileName);
