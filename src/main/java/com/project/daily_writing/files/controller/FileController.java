@@ -40,9 +40,9 @@ public class FileController {
    
    private FileService fileService;
    
-   String host = "192.168.67.128";
-   String user = "test";
-   String password = "test1234";;
+   String host = "192.168.75.128";
+   String user = "user";
+   String password = "12345678";
    
    public FileController(FileService fileService) {
 	   this.fileService = fileService;
@@ -57,13 +57,13 @@ public class FileController {
 
             byte[] imageBytes = Base64.getDecoder().decode(imageInfo);
 
-            String uploadDir = "C:\\Users\\hr\\Desktop\\";
+            String uploadDir = "C:\\Users\\USER\\Desktop\\";
             String fileName = data.get("imageName");
 
             File localFile = new File(uploadDir + fileName);
             FileUtils.writeByteArrayToFile(localFile, imageBytes);
 
-            fileService.uploadToLinuxServer(localFile, "/home/test/images/", host, user, password);
+            fileService.uploadToLinuxServer(localFile, "/home/user/images/", host, user, password);
          
          return ResponseEntity.ok("File uploaded successfully.");
       }catch(Exception e) {
@@ -81,13 +81,13 @@ public class FileController {
          String id		  = data.get("id");
             byte[] imageBytes = Base64.getDecoder().decode(imageInfo);
 
-            String uploadDir = "C:\\Users\\hr\\Desktop\\";
+            String uploadDir = "C:\\Users\\USER\\Desktop\\temp\\";
             String fileName = data.get("imageName");
 
             File localFile = new File(uploadDir + fileName);
             FileUtils.writeByteArrayToFile(localFile, imageBytes);
 
-            fileService.uploadToLinuxServerIdFolder(localFile, "/home/test/images/", host, user, password,id);
+            fileService.uploadToLinuxServerIdFolder(localFile, "/home/user/images/", host, user, password,id);
          
          return ResponseEntity.ok("File uploaded successfully.");
       }catch(Exception e) {
@@ -116,7 +116,7 @@ public class FileController {
    public ResponseEntity<?> createTempFolder(){
 	   try {
 	         
-		   fileService.makeFolderInLinux("/home/test/images/", host, user, password, host);
+		   fileService.makeFolderInLinux("/home/user/images/", host, user, password, host);
         
         return new ResponseEntity<>("File deleted successfully.",HttpStatus.OK);
            
@@ -134,7 +134,7 @@ public class FileController {
 		   
 		   String id = data.get("id");
 	         
-		   fileService.changeFolderName("/home/test/images/temp/", host, user, password, id);
+		   fileService.changeFolderName("/home/user/images/temp/", host, user, password, id);
         
         return new ResponseEntity<>("File deleted successfully.",HttpStatus.OK);
            

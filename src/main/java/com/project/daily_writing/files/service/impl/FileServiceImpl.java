@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
 	        	       
 	        String tempDir = remoteDir + "temp/";
 
-	        sftpChannel.put(new FileInputStream(localFile), tempDir + localFile.getName());
+	        sftpChannel.put(new FileInputStream(localFile), tempDir + localFile.getName(),ChannelSftp.OVERWRITE | ChannelSftp.RESUME);
 
 	        sftpChannel.exit();
 	        channel.disconnect();
