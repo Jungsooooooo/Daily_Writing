@@ -128,6 +128,22 @@ public class FileController {
       }
    }
    
+   @PostMapping("/delete-all")
+   public ResponseEntity<String> imageDeleteAll(@RequestBody FileDeleteDto fileDeleteDto) throws JSchException{   
+    
+      try {
+         
+            fileService.deleteFileAll(fileDeleteDto, host, user, password);
+         
+         return ResponseEntity.ok("File deleted successfully.");
+      }catch(Exception e) {
+         e.printStackTrace();
+         
+         return ResponseEntity.ok(e.getMessage());
+      }
+   }
+   
+   
    @PostMapping("/create-temp-folder")
    public ResponseEntity<?> createTempFolder(){
 	   try {

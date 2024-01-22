@@ -128,6 +128,44 @@ public class FileServiceImpl implements FileService {
 	}
 	
 	@Override
+	public void deleteFileAll(FileDeleteDto fileDeleteDto, String host, String username, String password)
+			throws JSchException, SftpException, FileNotFoundException {
+		
+		JSch jsch = new JSch();
+		
+		Session session = jsch.getSession(username,host,22);
+		session.setPassword(password);
+		session.setConfig("StrictHostKeyChecking", "no");
+		session.connect();
+		
+		Channel channel = session.openChannel("sftp");
+		channel.connect();
+		
+		ChannelSftp sftpChannel = (ChannelSftp) channel;
+		String folderPath ="/home/user/images/"+fileDeleteDto.getId();
+		
+		Vector<ChannelSftp.LsEntry> entries = sftpChannel.ls(folderPath);
+
+      
+        for (ChannelSftp.LsEntry entry : entries) {
+            String entryName = entry.getFilename();
+            if (!entryName.equals(".") && !entryName.equals("..")) {
+              
+                String entryPath = folderPath + "/" + entryName;
+              
+                sftpChannel.rm(entryPath);
+            }
+            
+        }
+		
+		sftpChannel.rmdir(folderPath);
+		
+		sftpChannel.exit();
+		session.disconnect();
+		
+	}
+	
+	@Override
 	public void uploadToLinuxServerIdFolder(File localFile, String remoteDir, String host, String username,
 			String password,String id) throws JSchException, SftpException, FileNotFoundException {
 		

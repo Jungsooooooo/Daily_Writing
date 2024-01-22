@@ -19,6 +19,9 @@ public interface FileService {
 	public void deleteFileById(FileDeleteDto fileDeleteDto, String host, String username, String password)
 			throws JSchException, SftpException, FileNotFoundException;
 	
+	public void deleteFileAll(FileDeleteDto fileDeleteDto, String host, String username, String password)
+			throws JSchException, SftpException, FileNotFoundException;
+	
 	public void uploadToLinuxServerIdFolder(File localFile, String remoteDir, String host, String username, String password,String id)
 			throws JSchException, SftpException, FileNotFoundException;
 	
