@@ -32,6 +32,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import com.project.daily_writing.files.service.FileService;
+import com.project.daily_writing.files.vo.FileDeleteDto;
 
 @Controller
 @RequestMapping("/api/files")
@@ -81,7 +82,7 @@ public class FileController {
          String id		  = data.get("id");
             byte[] imageBytes = Base64.getDecoder().decode(imageInfo);
 
-            String uploadDir = "C:\\Users\\USER\\Desktop\\temp\\";
+            String uploadDir = "C:\\Users\\USER\\";
             String fileName = data.get("imageName");
 
             File localFile = new File(uploadDir + fileName);
@@ -98,11 +99,26 @@ public class FileController {
    }
    
    @PostMapping("/delete")
-   public ResponseEntity<String> imageDelete(@RequestBody List<String> filePathList) throws JSchException{   
+   public ResponseEntity<String> imageDelete(@RequestBody FileDeleteDto fileDeleteDto) throws JSchException{   
     
       try {
          
-            fileService.deleteFile(filePathList, host, user, password);
+            fileService.deleteFile(fileDeleteDto, host, user, password);
+         
+         return ResponseEntity.ok("File deleted successfully.");
+      }catch(Exception e) {
+         e.printStackTrace();
+         
+         return ResponseEntity.ok(e.getMessage());
+      }
+   }
+   
+   @PostMapping("/delete-by-id")
+   public ResponseEntity<String> imageDeleteById(@RequestBody FileDeleteDto fileDeleteDto) throws JSchException{   
+    
+      try {
+         
+            fileService.deleteFileById(fileDeleteDto, host, user, password);
          
          return ResponseEntity.ok("File deleted successfully.");
       }catch(Exception e) {
